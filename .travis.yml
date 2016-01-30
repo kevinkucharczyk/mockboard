@@ -1,0 +1,31 @@
+---
+language: node_js
+node_js:
+  - "0.12"
+
+sudo: false
+
+cache:
+  directories:
+    - node_modules
+
+before_install:
+  - export PATH=/usr/local/phantomjs-2.0.0/bin:$PATH
+  - "npm config set spin false"
+  - "npm install -g npm@^2"
+
+install:
+  - npm install -g bower
+  - npm install
+  - bower install
+
+script:
+  - npm test
+
+after_success:
+  - test $TRAVIS_PULL_REQUEST == "false" && test $TRAVIS_BRANCH == "master" && bash gh-pages-deploy.sh
+
+env:
+  global:
+    - GH_REF=github.com/kevinkucharczyk/mockboard.git
+    - secure: jmaeG0l9b6Yg9NmqybND+LLA91pksGvt9rMfFVUVhUHzMON6AV7qU4sKzHc6s+sUb6A1qTbdmXs5SrJ1/rYD2JrQXMAg577e/z8BqnTC5vWoPtRUeZhjjac/y9xqkIA3dXED/9gQccB0jtOlAABN2nbuQKv7fGPjnPe3mUpqDAm4Fof9bnGahAVOy6WosbQWMRRRXABJv80i6VGoc4KThSNKhL9ucnkOYjB6fohr9nJpWIEIb0O6aqqqSXl11B1XrUjaAKS8mUtixnpIop/d/5BpUW9PDVIZe/KoO0UlsMYdUuQJXkL/nAz4iV/yLpvLS4MUK+YTPMEzO7AxVS8dYjfITMq6Y+2bgXZ6aO/qmh8C9rOJtpQqrCryFs5l/Ri+6XMKB9TaHwlyXFcgBdFvOOWUkDGCjq0uZ5+0unuXf6VIrgObXcAWm7ewI5COBGKxx1QL1GVzUev2SEahnE9AwYRjkR/S5JdJiyohiJLkdDTgDBy8z4JEaGDU1Holz3V8gqtNDD/c0abDQDNJQhHE0n6rQS5PWcHH+gC1gJShctqbFmu7CFkgtN+nb1/GQUcMvRdwgYxgje09eI6hBUH4epX2iY4MWrL01wh6UQTVjWjYd5AYGWtWOfgUAHwjEqmaBU9iLxQkopzc1W71uGq3knpP9YFMiSIexOzrb2ypiYY=

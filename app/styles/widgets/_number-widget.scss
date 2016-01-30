@@ -1,0 +1,18 @@
+$number-widget__main-color: #348899;
+
+.number-widget {
+    padding: 2*$global-padding;
+    background-color: $number-widget__main-color;
+}
+
+.number-widget__title {
+    color: lighten($number-widget__main-color, 50%);
+    font-size: 1.5rem;
+    text-align: center;
+}
+
+.number-widget__value {
+    color: lighten($number-widget__main-color, 75%);
+    font-size: 2rem;
+    text-align: center;
+}
