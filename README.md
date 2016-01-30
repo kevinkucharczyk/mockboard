@@ -1,4 +1,4 @@
-# Mockboard
+# Mockboard [![Build Status](https://travis-ci.org/kevinkucharczyk/mockboard.svg?branch=master)](https://travis-ci.org/kevinkucharczyk/mockboard)
 
 This is a mockup frontend for a widget-driven dashboard written in Ember.js. It is very much a work in progress.
 
