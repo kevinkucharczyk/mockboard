@@ -5,6 +5,7 @@ const pi = Math.PI;
 
 export default Ember.Component.extend({
   classNames: ['gauge-widget'],
+  pathClasses: ['gauge-widget__value-path', 'gauge-widget__remainder-path'],
   offset: 120,
   width: 400,
   height: 320,
@@ -42,6 +43,10 @@ export default Ember.Component.extend({
     return this.get('viewport').select('g').selectAll('path').data(data);
   }),
 
+  text: Ember.computed('data', function() {
+    return this.get('viewport').select('g').selectAll('text').data([this.get('value')]);
+  }),
+
   viewport: Ember.computed(function() {
     return d3.select(this.$('svg').get(0));
   }),
@@ -57,25 +62,60 @@ export default Ember.Component.extend({
     };
   },
 
-  didInsertElement() {
-    const groups = this.get('groups');
+  textTween(d) {
+    const currentValue = +this.textContent,
+      i = d3.interpolate( currentValue, d ),
+      prec = (d + "").split("."),
+      round = (prec.length > 1) ? Math.pow(10, prec[1].length) : 1;
 
-    groups
-      .enter()
-      .append('path').attr('class', 'gauge-widget__path')
+    return function(t) {
+      this.textContent = Math.round(i(t) * round) / round;
+    };
+  },
+
+  didInsertElement() {
+    const groups = this.get('groups'),
+      text = this.get('text');
+
+    const groupsEnter = groups.enter(),
+      textEnter = text.enter();
+
+    groupsEnter
+      .append('path')
+      .attr('class',
+        (d, i) => {
+          return this.get('pathClasses')[i];
+        })
       .attr('d', this.get('arc'))
       .each((d) => {
         this.get('currentData').push(d);
        });
 
+    textEnter
+      .append('text')
+      .text(this.get('value'))
+      .attr('class', 'gauge-widget__text')
+      .style('font-size', this.get('radius')/2.5+'px');
+
     groups.exit().remove();
+    text.exit().remove();
   },
 
   didUpdateAttrs() {
-    const groups = this.get('groups');
+    const groups = this.get('groups'),
+      text = this.get('text');
 
-    groups.transition().duration(750).attrTween('d', this.get('arcTween').bind(this));
+    groups
+      .transition()
+      .duration(750)
+      .attrTween('d', this.get('arcTween').bind(this));
+
+    text
+      .transition()
+      .duration(750)
+      .tween('text', this.get('textTween'));
 
     groups.exit().remove();
+    text.exit().remove();
   }
 });

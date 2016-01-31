@@ -11,21 +11,21 @@ $gauge-widget__main-color: #542437;
   text-align: center;
 }
 
-.gauge-widget__value {
-  color: lighten($gauge-widget__main-color, 75%);
-  font-size: 2rem;
-  text-align: center;
-}
-
 .gauge-widget__chart {
   display: block;
   margin: 1rem auto 0;
 }
 
-.gauge-widget__path:first-child {
+.gauge-widget__value-path {
   fill: lighten($gauge-widget__main-color, 75%);
 }
 
-.gauge-widget__path:last-child {
+.gauge-widget__remainder-path {
   fill: lighten($gauge-widget__main-color, 10%);
+}
+
+.gauge-widget__text {
+  fill: lighten($gauge-widget__main-color, 75%);
+  font-weight: 600;
+  text-anchor: middle;
 }
