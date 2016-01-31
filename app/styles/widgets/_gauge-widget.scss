@@ -1,0 +1,31 @@
+$gauge-widget__main-color: #542437;
+
+.gauge-widget {
+  padding: 2*$global-padding;
+  background-color: $gauge-widget__main-color;
+}
+
+.gauge-widget__title {
+  color: lighten($gauge-widget__main-color, 75%);
+  font-size: 1.5rem;
+  text-align: center;
+}
+
+.gauge-widget__value {
+  color: lighten($gauge-widget__main-color, 75%);
+  font-size: 2rem;
+  text-align: center;
+}
+
+.gauge-widget__chart {
+  display: block;
+  margin: 1rem auto 0;
+}
+
+.gauge-widget__path:first-child {
+  fill: lighten($gauge-widget__main-color, 75%);
+}
+
+.gauge-widget__path:last-child {
+  fill: lighten($gauge-widget__main-color, 10%);
+}
