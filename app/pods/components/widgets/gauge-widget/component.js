@@ -11,6 +11,7 @@ export default Ember.Component.extend({
   radius: Ember.computed('width', 'height', function() {
     return this.get('width') / 2;
   }),
+  currentData: [],
   gaugeWidth: 15,
   transform: Ember.computed('width', 'height', function() {
     return 'translate(' + this.get('width')/2 + ',' + this.get('width')/2 + ')';
@@ -42,15 +43,39 @@ export default Ember.Component.extend({
   }),
 
   viewport: Ember.computed(function() {
-    return d3.select(this.$("svg").get(0));
+    return d3.select(this.$('svg').get(0));
   }),
 
-  didRender() {
+  arcTween(d, i) {
+    const current = this.get('currentData')[i];
+    const interpolate = d3.interpolate(current, d);
+    const arc = this.get('arc');
+
+    this.get('currentData')[i] = interpolate(0);
+    return function(t) {
+      return arc(interpolate(t));
+    };
+  },
+
+  didInsertElement() {
     const groups = this.get('groups');
 
     groups
       .enter()
       .append('path').attr('class', 'gauge-widget__path')
-      .attr('d', this.get('arc'));
+      .attr('d', this.get('arc'))
+      .each((d) => {
+        this.get('currentData').push(d);
+       });
+
+    groups.exit().remove();
+  },
+
+  didUpdateAttrs() {
+    const groups = this.get('groups');
+
+    groups.transition().duration(750).attrTween('d', this.get('arcTween').bind(this));
+
+    groups.exit().remove();
   }
 });
