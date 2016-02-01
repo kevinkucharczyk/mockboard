@@ -41,20 +41,11 @@ export default Ember.Component.extend({
   groups: Ember.computed('data', function() {
     const data = this.get('pie')(this.get('data'));
     return this.get('viewport').selectAll('.arc').data(data);
-  }),
-
-  groupsPaths: Ember.computed('data', function() {
-    const data = this.get('pie')(this.get('data'));
-    return this.get('viewport').selectAll('path').data(data);
-  }),
+  }).volatile(),
 
   text: Ember.computed('data', function() {
     return this.get('viewport').selectAll('.text').data([this.get('value')]);
-  }),
-
-  textPath: Ember.computed('data', function() {
-    return this.get('viewport').selectAll('text').data([this.get('value')]);
-  }),
+  }).volatile(),
 
   viewport: Ember.computed(function() {
     return d3.select(this.$('.gauge-widget__viewport')[0]);
@@ -88,19 +79,18 @@ export default Ember.Component.extend({
   },
 
   drawOnce() {
-    Ember.run.scheduleOnce('afterRender', this, 'drawChart');
+    Ember.run.scheduleOnce('afterRender', this, 'draw');
   },
 
   updateOnce() {
-    Ember.run.scheduleOnce('afterRender', this, 'updateChart');
+    Ember.run.scheduleOnce('afterRender', this, 'update');
   },
 
-  drawChart() {
+  _prepareData() {
+    this.set('currentData', []);
+
     const groups = this.get('groups'),
       text = this.get('text');
-
-    groups.remove();
-    text.remove();
 
     const groupsEnter = groups.enter().append('g').attr('class', 'arc'),
       textEnter = text.enter().append('g').attr('class', 'text');
@@ -110,29 +100,48 @@ export default Ember.Component.extend({
       .attr('class',
         (d, i) => {
           return this.get('pathClasses')[i];
-        })
-      .attr('d', this.get('arc'))
-      .each((d) => {
-        this.get('currentData').push(d);
-       });
+        });
 
     textEnter
       .append('text')
-      .text(this.get('value'))
-      .attr('class', 'gauge-widget__text')
-      .style('font-size', this.get('radius')/2.5+'px');
+      .attr('class', 'gauge-widget__text');
+
+    groups.exit().remove();
+    text.exit().remove();
   },
 
-  updateChart() {
-    const groups = this.get('groupsPaths'),
-      text = this.get('textPath');
+  _drawChart() {
+    const groups = this.get('groups'),
+      text = this.get('text');
 
     groups
+      .select('path')
+      .attr('d', this.get('arc'))
+      .each(d => this.get('currentData').push(d));
+
+    text
+      .select('text')
+      .style('font-size', this.get('radius')/2.5+'px')
+      .text(d => d);
+  },
+
+  draw() {
+    this._prepareData();
+    this._drawChart();
+  },
+
+  update() {
+    const groups = this.get('groups'),
+      text = this.get('text');
+
+    groups
+      .select('path')
       .transition()
       .duration(750)
       .attrTween('d', this.get('arcTween').bind(this));
 
     text
+      .select('text')
       .transition()
       .duration(750)
       .tween('text', this.get('textTween'));
@@ -144,7 +153,7 @@ export default Ember.Component.extend({
     this.drawOnce();
     Ember.$(window).resize(() => {
       this._updateDimensions();
-      this.drawChart();
+      this.drawOnce();
     });
   },
 
