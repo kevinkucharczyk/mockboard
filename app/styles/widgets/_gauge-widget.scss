@@ -6,14 +6,26 @@ $gauge-widget__main-color: #542437;
 }
 
 .gauge-widget__title {
+  margin-bottom: $global-padding;
   color: lighten($gauge-widget__main-color, 75%);
   font-size: 1.5rem;
   text-align: center;
 }
 
-.gauge-widget__chart {
+.gauge-widget__chart-container {
   display: block;
-  margin: 1rem auto 0;
+  position: relative;
+  padding-bottom: 76%;
+  overflow: hidden;
+}
+
+.gauge-widget__chart {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  overflow: hidden;
 }
 
 .gauge-widget__value-path {

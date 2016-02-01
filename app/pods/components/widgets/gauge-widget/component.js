@@ -7,8 +7,8 @@ export default Ember.Component.extend({
   classNames: ['gauge-widget'],
   pathClasses: ['gauge-widget__value-path', 'gauge-widget__remainder-path'],
   offset: 120,
-  width: 400,
-  height: 320,
+  width: 300,
+  height: 300,
   radius: Ember.computed('width', 'height', function() {
     return this.get('width') / 2;
   }),
@@ -40,15 +40,24 @@ export default Ember.Component.extend({
 
   groups: Ember.computed('data', function() {
     const data = this.get('pie')(this.get('data'));
-    return this.get('viewport').select('g').selectAll('path').data(data);
+    return this.get('viewport').selectAll('.arc').data(data);
+  }),
+
+  groupsPaths: Ember.computed('data', function() {
+    const data = this.get('pie')(this.get('data'));
+    return this.get('viewport').selectAll('path').data(data);
   }),
 
   text: Ember.computed('data', function() {
-    return this.get('viewport').select('g').selectAll('text').data([this.get('value')]);
+    return this.get('viewport').selectAll('.text').data([this.get('value')]);
+  }),
+
+  textPath: Ember.computed('data', function() {
+    return this.get('viewport').selectAll('text').data([this.get('value')]);
   }),
 
   viewport: Ember.computed(function() {
-    return d3.select(this.$('svg').get(0));
+    return d3.select(this.$('.gauge-widget__viewport')[0]);
   }),
 
   arcTween(d, i) {
@@ -73,12 +82,28 @@ export default Ember.Component.extend({
     };
   },
 
-  didInsertElement() {
+  _updateDimensions: function() {
+    this.set('width', this.$().width());
+    this.set('height', this.$().height());
+  },
+
+  drawOnce() {
+    Ember.run.scheduleOnce('afterRender', this, 'drawChart');
+  },
+
+  updateOnce() {
+    Ember.run.scheduleOnce('afterRender', this, 'updateChart');
+  },
+
+  drawChart() {
     const groups = this.get('groups'),
       text = this.get('text');
 
-    const groupsEnter = groups.enter(),
-      textEnter = text.enter();
+    groups.remove();
+    text.remove();
+
+    const groupsEnter = groups.enter().append('g').attr('class', 'arc'),
+      textEnter = text.enter().append('g').attr('class', 'text');
 
     groupsEnter
       .append('path')
@@ -96,14 +121,11 @@ export default Ember.Component.extend({
       .text(this.get('value'))
       .attr('class', 'gauge-widget__text')
       .style('font-size', this.get('radius')/2.5+'px');
-
-    groups.exit().remove();
-    text.exit().remove();
   },
 
-  didUpdateAttrs() {
-    const groups = this.get('groups'),
-      text = this.get('text');
+  updateChart() {
+    const groups = this.get('groupsPaths'),
+      text = this.get('textPath');
 
     groups
       .transition()
@@ -114,8 +136,21 @@ export default Ember.Component.extend({
       .transition()
       .duration(750)
       .tween('text', this.get('textTween'));
+  },
 
-    groups.exit().remove();
-    text.exit().remove();
+  didInsertElement() {
+    this._super();
+    this._updateDimensions();
+    this.drawOnce();
+    Ember.$(window).resize(() => {
+      this._updateDimensions();
+      this.drawChart();
+    });
+  },
+
+  didUpdateAttrs() {
+    this._super();
+    this._updateDimensions();
+    this.updateOnce();
   }
 });

@@ -3,8 +3,10 @@
 </div>
 
 <div class="gauge-widget__chart-container">
-  <svg width="{{width}}" height="{{height}}" class="gauge-widget__chart">
-    <g transform="{{transform}}">
-    </g>
-  </svg>
+  <div class="gauge-widget__chart">
+    <svg class="gauge-widget__svg" width="{{width}}" height="{{height}}">
+      <g class="gauge-widget__viewport" transform="{{transform}}">
+      </g>
+    </svg>
+  </div>
 </div>
