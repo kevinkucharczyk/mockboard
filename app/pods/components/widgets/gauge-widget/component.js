@@ -149,17 +149,36 @@ export default Ember.Component.extend({
 
   didInsertElement() {
     this._super();
+    this._setupResizeListener();
     this._updateDimensions();
     this.drawOnce();
-    Ember.$(window).resize(() => {
-      this._updateDimensions();
-      this.drawOnce();
-    });
+  },
+
+  willDestroyElement() {
+    this._destroyResizeListener();
   },
 
   didUpdateAttrs() {
     this._super();
     this._updateDimensions();
     this.updateOnce();
+  },
+
+  _onResizeEnd() {
+    this._updateDimensions();
+    this.drawOnce();
+  },
+
+  _debouncedResizeHandler() {
+    return Ember.run.debounce(this, this._onResizeEnd, 200);
+  },
+
+  _setupResizeListener() {
+    const resizeHandler = Ember.$.proxy(this._debouncedResizeHandler, this);
+    Ember.$(window).on('resize.' + this.elementId, resizeHandler);
+  },
+
+  _destroyResizeListener() {
+    Ember.$(window).off('resize.' + this.elementId);
   }
 });
