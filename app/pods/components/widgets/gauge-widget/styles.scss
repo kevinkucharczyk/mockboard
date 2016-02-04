@@ -1,6 +1,6 @@
 $gauge-widget__main-color: #542437;
 
-.gauge-widget {
+&.gauge-widget {
   padding: 2*$global-padding;
   background-color: $gauge-widget__main-color;
 }

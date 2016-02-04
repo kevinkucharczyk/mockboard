@@ -1,6 +1,6 @@
 $number-widget__main-color: #348899;
 
-.number-widget {
+&.number-widget {
     padding: 2*$global-padding;
     background-color: $number-widget__main-color;
 }

@@ -6,16 +6,20 @@ const pi = Math.PI;
 export default Ember.Component.extend({
   classNames: ['gauge-widget'],
   pathClasses: ['gauge-widget__value-path', 'gauge-widget__remainder-path'],
+  currentData: [],
   offset: 120,
   width: 300,
   height: 300,
+  gaugeWidth: 15,
   radius: Ember.computed('width', 'height', function() {
     return this.get('width') / 2;
   }),
-  currentData: [],
-  gaugeWidth: 15,
   transform: Ember.computed('width', 'height', function() {
     return 'translate(' + this.get('width')/2 + ',' + this.get('width')/2 + ')';
+  }),
+
+  viewport: Ember.computed(function() {
+    return d3.select(this.$('.gauge-widget__viewport')[0]);
   }),
 
   data: Ember.computed('value', 'max', function() {
@@ -47,10 +51,6 @@ export default Ember.Component.extend({
     return this.get('viewport').selectAll('.text').data([this.get('value')]);
   }).volatile(),
 
-  viewport: Ember.computed(function() {
-    return d3.select(this.$('.gauge-widget__viewport')[0]);
-  }),
-
   arcTween(d, i) {
     const current = this.get('currentData')[i];
     const interpolate = d3.interpolate(current, d);
@@ -73,17 +73,22 @@ export default Ember.Component.extend({
     };
   },
 
-  _updateDimensions: function() {
+  updateDimensions() {
+    Ember.run.scheduleOnce('afterRender', this, '_updateDimensions');
+  },
+
+  _updateDimensions() {
     this.set('width', this.$().width());
     this.set('height', this.$().height());
   },
 
-  drawOnce() {
-    Ember.run.scheduleOnce('afterRender', this, 'draw');
+  draw() {
+    Ember.run.scheduleOnce('afterRender', this, '_draw');
   },
 
-  updateOnce() {
-    Ember.run.scheduleOnce('afterRender', this, 'update');
+  _draw() {
+    this._prepareData();
+    this._drawChart();
   },
 
   _prepareData() {
@@ -125,12 +130,11 @@ export default Ember.Component.extend({
       .text(d => d);
   },
 
-  draw() {
-    this._prepareData();
-    this._drawChart();
+  update() {
+    Ember.run.scheduleOnce('afterRender', this, '_update');
   },
 
-  update() {
+  _update() {
     const groups = this.get('groups'),
       text = this.get('text');
 
@@ -147,38 +151,38 @@ export default Ember.Component.extend({
       .tween('text', this.get('textTween'));
   },
 
-  didInsertElement() {
-    this._super();
-    this._setupResizeListener();
-    this._updateDimensions();
-    this.drawOnce();
-  },
-
-  willDestroyElement() {
-    this._destroyResizeListener();
-  },
-
-  didUpdateAttrs() {
-    this._super();
-    this._updateDimensions();
-    this.updateOnce();
-  },
-
   _onResizeEnd() {
-    this._updateDimensions();
-    this.drawOnce();
+    this.updateDimensions();
+    this.draw();
   },
 
-  _debouncedResizeHandler() {
+  debouncedResizeHandler() {
     return Ember.run.debounce(this, this._onResizeEnd, 200);
   },
 
   _setupResizeListener() {
-    const resizeHandler = Ember.$.proxy(this._debouncedResizeHandler, this);
+    const resizeHandler = Ember.$.proxy(this.debouncedResizeHandler, this);
     Ember.$(window).on('resize.' + this.elementId, resizeHandler);
   },
 
   _destroyResizeListener() {
     Ember.$(window).off('resize.' + this.elementId);
+  },
+
+  didInsertElement() {
+    this._super();
+    this._setupResizeListener();
+    this.updateDimensions();
+    this.draw();
+  },
+
+  didUpdateAttrs() {
+    this._super();
+    this.updateDimensions();
+    this.update();
+  },
+
+  willDestroyElement() {
+    this._destroyResizeListener();
   }
 });
