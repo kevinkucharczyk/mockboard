@@ -1,9 +1,9 @@
 #!/bin/bash
 set -e
 
-ember build --environment ghpages
+gulp ghpages
 
-cd dist
+cd lib/client/dist
 
 git init
 
