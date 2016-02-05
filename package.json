@@ -25,7 +25,11 @@
   "devDependencies": {
     "bower": "^1.7.7",
     "gulp": "^3.9.0",
-    "gulp-shell": "^0.5.2",
     "run-sequence": "^1.1.5"
+  },
+  "dependencies": {
+    "chalk": "^1.1.1",
+    "express": "^4.13.4",
+    "socket.io": "^1.4.5"
   }
 }

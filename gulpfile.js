@@ -1,7 +1,8 @@
 var path        = require('path'),
+    spawn       = require('child_process').spawn,
+    chalk       = require('chalk'),
 
     gulp        = require('gulp'),
-    shell       = require('gulp-shell'),
     runSequence = require('run-sequence'),
 
     escapeChar  = process.platform.match(/^win/) ? '^' : '\\',
@@ -13,24 +14,58 @@ var emberOptions = {
   cwd: path.resolve(process.cwd() + '/lib/client/')
 };
 
-gulp.task('serve', shell.task(emberPath + ' s', emberOptions));
+var _spawn = function(id, cmd, args, opts, callback) {
+  var command = spawn(cmd, args, opts);
+  command.stdout.on('data', function(data) {
+    console.log(chalk.green(id + ': ') + data);
+  });
+  command.stderr.on('data', function(data) {
+    console.log(chalk.red(id + ' stderr: ') + data);
+  });
+  command.on('close', function(code) {
+    callback(code);
+  });
+  return command;
+}
 
-gulp.task('client:bower', shell.task(bowerPath + ' install'));
+gulp.task('client:bower', function(callback) {
+  return _spawn('bower', bowerPath, ['install'], {}, callback);
+});
 
-gulp.task('client:npm', shell.task('npm install', emberOptions));
+gulp.task('client:serve', function(callback) {
+  return _spawn('Ember serve', emberPath, ['s'], emberOptions, callback);
+});
+
+gulp.task('client:npm', function(callback) {
+  return _spawn('client npm', 'npm', ['install'], emberOptions, callback);
+});
+
+gulp.task('client:build', function(callback) {
+  return _spawn('Ember build', emberPath, ['build', '--environment=production'], emberOptions, callback);
+});
+
+gulp.task('client:watch', function(callback) {
+  return _spawn('Ember watch', emberPath, ['build', '--watch'], emberOptions, callback);
+});
+
+gulp.task('client:test', function(callback) {
+  return _spawn('Ember test', emberPath, ['test'], emberOptions, callback);
+});
+
+gulp.task('server:serve', function(callback) {
+  return _spawn('Server serve', 'node', ['index.js'], {}, callback);
+});
 
 gulp.task('init', function(callback) {
   return runSequence(['client:bower', 'client:npm'], callback);
 });
 
-gulp.task('test', shell.task(emberPath + ' test', emberOptions));
-
 gulp.task('validate', function(callback) {
-  runSequence('init', 'test', callback);
+  return runSequence('init', 'client:test', callback);
 });
 
-gulp.task('ghpages', shell.task(emberPath + ' build --environment ghpages', emberOptions));
-
-gulp.task('default', function() {
-  console.log(cwd);
+gulp.task('ghpages', function(callback) {
+  return _spawn('Ember ghpages', emberPath, ['build', '--environment=ghpages'], emberOptions, callback);
 });
+
+gulp.task('dev', ['client:watch', 'server:serve']);

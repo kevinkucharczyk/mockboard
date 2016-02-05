@@ -9,10 +9,14 @@
     "jquery": "1.11.3",
     "loader.js": "^3.5.0",
     "foundation-sites": "^6.1.2",
-    "d3": "^3.5.14"
+    "d3": "^3.5.14",
+    "socket.io-client": "^1.4.5"
   },
   "resolutions": {
     "ember": "2.3.0",
     "jquery": "1.11.3"
+  },
+  "devDependencies": {
+    "uri.js": "uri.js#^1.17.0"
   }
 }
