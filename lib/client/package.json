@@ -20,6 +20,8 @@
   "license": "MIT",
   "devDependencies": {
     "broccoli-asset-rev": "^2.2.0",
+    "broccoli-funnel": "^1.0.1",
+    "broccoli-merge-trees": "^1.1.1",
     "ember-ajax": "0.7.1",
     "ember-cli": "2.3.0-beta.1",
     "ember-cli-app-version": "^1.0.0",
@@ -42,5 +44,10 @@
     "ember-resolver": "^2.0.3",
     "ember-style-bindings": "0.0.1",
     "ember-websockets": "2.0.1"
+  },
+  "ember-addon": {
+    "paths": [
+      "lib/import-widgets"
+    ]
   }
 }

@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import BaseWidget from '../../base-widget/component';
+import BaseWidget from '../base-widget/component';
 import d3 from 'd3';
 
 const pi = Math.PI;
