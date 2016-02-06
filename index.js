@@ -1,6 +1,7 @@
 var express  = require('express'),
     app      = express(),
-    socketio = require('socket.io');
+    socketio = require('socket.io'),
+    jobs     = require('./lib/server/jobs');
 
 app.use('/assets', express.static(__dirname + '/lib/client/dist/assets'));
 
@@ -21,3 +22,6 @@ io.on('connection', function(client) {
     console.log(data);
   });
 });
+
+jobs.registerSocket(io);
+jobs.scheduleJobs();
