@@ -47,7 +47,8 @@
   },
   "ember-addon": {
     "paths": [
-      "lib/import-widgets"
+      "lib/import-widgets",
+      "lib/import-dashboards"
     ]
   }
 }
