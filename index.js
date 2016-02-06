@@ -15,13 +15,5 @@ var server = app.listen(3141, function () {
 
 var io = socketio.listen(server);
 
-io.on('connection', function(client) {
-  console.log('Client connected...');
-
-  client.on('join', function(data) {
-    console.log(data);
-  });
-});
-
 jobs.registerSocket(io);
 jobs.scheduleJobs();
