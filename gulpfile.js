@@ -4,6 +4,7 @@ var path        = require('path'),
 
     gulp        = require('gulp'),
     runSequence = require('run-sequence'),
+    nodemon     = require('gulp-nodemon'),
 
     escapeChar  = process.platform.match(/^win/) ? '^' : '\\',
     cwd         = process.cwd().replace(/( |\(|\))/g, escapeChar + '$1'),
@@ -14,13 +15,23 @@ var emberOptions = {
   cwd: path.resolve(process.cwd() + '/lib/client/')
 };
 
-var _spawn = function(id, cmd, args, opts, callback) {
+function _logStdOut(id, data) {
+  var logData = data.toString().replace(/\n$/, '');
+  console.log('[' + chalk.gray(new Date().toString().split(' ')[4])+ '] ' + chalk.green('[' + id + '] ') + logData);
+}
+
+function _logStdErr(id, data) {
+  var logData = data.toString().replace(/\n$/, '');
+  console.log('[' + chalk.gray(new Date().toString().split(' ')[4])+ '] ' + chalk.red('[' + id + '] ') + logData);
+}
+
+function _spawn(id, cmd, args, opts, callback) {
   var command = spawn(cmd, args, opts);
   command.stdout.on('data', function(data) {
-    console.log(chalk.green(id + ': ') + data);
+    _logStdOut(id, data);
   });
   command.stderr.on('data', function(data) {
-    console.log(chalk.red(id + ' stderr: ') + data);
+    _logStdErr(id, data);
   });
   command.on('close', function(code) {
     callback(code);
@@ -52,6 +63,24 @@ gulp.task('client:test', function(callback) {
   return _spawn('Ember test', emberPath, ['test'], emberOptions, callback);
 });
 
+gulp.task('server:watch', function () {
+  nodemon({
+    script: 'index.js',
+    ext: 'js json',
+    watch: ['index.js', 'lib/server/**/*.js'],
+    stdout: false
+  })
+  .on('readable', function() {
+    this.stdout.on('data', function(data) {
+      _logStdOut('Server watch', data);
+    });
+
+    this.stderr.on('data', function(data) {
+      _logStdErr('Server watch', data);
+    });
+  });
+});
+
 gulp.task('server:serve', function(callback) {
   return _spawn('Server serve', 'node', ['index.js'], {}, callback);
 });
@@ -68,4 +97,4 @@ gulp.task('ghpages', function(callback) {
   return _spawn('Ember ghpages', emberPath, ['build', '--environment=ghpages'], emberOptions, callback);
 });
 
-gulp.task('dev', ['client:watch', 'server:serve']);
+gulp.task('dev', ['client:watch', 'server:watch']);
