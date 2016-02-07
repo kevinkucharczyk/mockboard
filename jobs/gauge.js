@@ -3,12 +3,12 @@ var job = {
 
   cron: '*/2 * * * * *',
 
-  data: function() {
+  data: function () {
     return {
       value: Math.floor(Math.random() * 100),
       max: 100
     };
   }
-}
+};
 
 module.exports = job;

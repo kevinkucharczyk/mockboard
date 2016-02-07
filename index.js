@@ -5,7 +5,7 @@ var express  = require('express'),
 
 app.use('/assets', express.static(__dirname + '/lib/client/dist/assets'));
 
-app.all('*', function(req, res, next) {
+app.all('*', function (req, res) {
   res.sendFile('index.html', { root: __dirname + '/lib/client/dist' });
 });
 

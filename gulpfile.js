@@ -5,6 +5,9 @@ var path        = require('path'),
     gulp        = require('gulp'),
     runSequence = require('run-sequence'),
     nodemon     = require('gulp-nodemon'),
+    jshint      = require('gulp-jshint'),
+    stylish     = require('jshint-stylish'),
+    jscs        = require('gulp-jscs'),
 
     escapeChar  = process.platform.match(/^win/) ? '^' : '\\',
     cwd         = process.cwd().replace(/( |\(|\))/g, escapeChar + '$1'),
@@ -67,7 +70,7 @@ gulp.task('server:watch', function () {
   nodemon({
     script: 'index.js',
     ext: 'js json',
-    watch: ['index.js', 'lib/server/**/*.js'],
+    watch: ['index.js', 'lib/server/**/*.js', 'jobs/*.js'],
     stdout: false
   })
   .on('readable', function() {
@@ -90,11 +93,23 @@ gulp.task('init', function(callback) {
 });
 
 gulp.task('validate', function(callback) {
-  return runSequence('init', 'client:test', callback);
+  return runSequence('init', 'jshint', 'jscs', 'client:test', callback);
 });
 
 gulp.task('ghpages', function(callback) {
   return _spawn('Ember ghpages', emberPath, ['build', '--environment=ghpages'], emberOptions, callback);
+});
+
+gulp.task('jshint', function() {
+  return gulp.src(['index.js', 'jobs/*.js', 'lib/server/**/*.js'])
+    .pipe(jshint())
+    .pipe(jshint.reporter(stylish));
+});
+
+gulp.task('jscs', function() {
+  return gulp.src(['index.js', 'jobs/*.js', 'lib/server/**/*.js'])
+    .pipe(jscs())
+    .pipe(jscs.reporter());
 });
 
 gulp.task('dev', ['client:watch', 'server:watch']);
