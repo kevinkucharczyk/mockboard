@@ -24,6 +24,7 @@
   "homepage": "https://github.com/kevinkucharczyk/mockboard#readme",
   "devDependencies": {
     "bower": "^1.7.7",
+    "cross-spawn": "^2.1.5",
     "gulp": "^3.9.0",
     "gulp-jscs": "^3.0.2",
     "gulp-jshint": "^2.0.0",

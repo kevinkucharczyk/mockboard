@@ -1,5 +1,5 @@
 var path        = require('path'),
-    spawn       = require('child_process').spawn,
+    spawn       = require('cross-spawn'),
     chalk       = require('chalk'),
 
     gulp        = require('gulp'),
