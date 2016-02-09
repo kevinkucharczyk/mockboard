@@ -1,0 +1,11 @@
+{
+  "name": "mockboard-base-widget",
+  "keywords": [
+    "ember-addon"
+  ],
+  "dependencies": {
+    "ember-cli-babel": "^5.1.5",
+    "ember-cli-htmlbars": "^1.0.1",
+    "ember-cli-htmlbars-inline-precompile": "^0.3.1"
+  }
+}

@@ -47,7 +47,8 @@
   "ember-addon": {
     "paths": [
       "lib/import-widgets",
-      "lib/import-dashboards"
+      "lib/import-dashboards",
+      "lib/mockboard-base-widget"
     ]
   }
 }
