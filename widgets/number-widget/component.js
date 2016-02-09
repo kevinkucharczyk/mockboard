@@ -1,6 +1,5 @@
 import Ember from 'ember';
-import StyledComponentMixin from 'ember-style-bindings/mixins/styled-component';
 
-export default Ember.Component.extend(StyledComponentMixin, {
+export default Ember.Component.extend({
   classNames: ['number-widget']
 });

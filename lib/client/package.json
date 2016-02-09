@@ -42,7 +42,6 @@
     "ember-export-application-global": "^1.0.4",
     "ember-lodash": "0.0.6",
     "ember-resolver": "^2.0.3",
-    "ember-style-bindings": "0.0.1",
     "ember-websockets": "2.0.1"
   },
   "ember-addon": {
