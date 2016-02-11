@@ -1,7 +1,7 @@
 var job = {
   channel: 'gauge',
 
-  cron: '*/2 * * * * *',
+  cron: '*/10 * * * * *',
 
   data: function () {
     return {
