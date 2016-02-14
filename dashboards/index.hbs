@@ -2,12 +2,14 @@
   Mockboard
 </h3>
 
-<div class="row">
-  <div class="small-12 medium-4 columns">
-    {{number-widget title="Test Number" value=5 channel="number"}}
-  </div>
+<div class="gridster">
+  <ul>
+    <li data-row="1" data-col="1" data-sizex="1" data-sizey="1">
+      {{number-widget title="Test Number" value=5 channel="number"}}
+    </li>
 
-  <div class="small-12 medium-6 columns">
-    {{gauge-widget title="Test Gauge" channel="gauge"}}
-  </div>
+    <li data-row="1" data-col="2" data-sizex="1" data-sizey="1">
+      {{gauge-widget title="Test Gauge" channel="gauge"}}
+    </li>
+  </ul>
 </div>
