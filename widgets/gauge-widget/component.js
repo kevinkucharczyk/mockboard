@@ -10,7 +10,7 @@ export default BaseWidget.extend({
   currentData: [],
   offset: 120,
   width: 300,
-  height: 300,
+  height: 225,
   gaugeWidth: 15,
   radius: Ember.computed('width', 'height', function() {
     return this.get('width') / 2;
@@ -87,8 +87,11 @@ export default BaseWidget.extend({
   },
 
   _updateDimensions() {
-    this.set('width', this.$().width());
-    this.set('height', this.$().height());
+    const width = this.$().width();
+    const height = this.$().height();
+    const value = Math.min(width, height) - 50;
+    this.set('width', value);
+    this.set('height', value * 0.75);
   },
 
   draw() {

@@ -1,7 +1,6 @@
 $gauge-widget__main-color: #542437;
 
 &.gauge-widget {
-  padding: 2*$global-padding;
   background-color: $gauge-widget__main-color;
 }
 
@@ -14,18 +13,12 @@ $gauge-widget__main-color: #542437;
 
 .gauge-widget__chart-container {
   display: block;
-  position: relative;
-  padding-bottom: 76%;
   overflow: hidden;
 }
 
-.gauge-widget__chart {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  overflow: hidden;
+.gauge-widget__svg {
+  display: block;
+  margin: 0 auto;
 }
 
 .gauge-widget__value-path {
