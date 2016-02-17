@@ -1,0 +1,38 @@
+$line-chart-widget__main-color: #C94C00;
+
+&.line-chart-widget {
+  background-color: $line-chart-widget__main-color;
+  padding: 1rem;
+}
+
+.line-chart-widget__title {
+  margin-bottom: $global-padding;
+  color: lighten($line-chart-widget__main-color, 75%);
+  font-size: 1.5rem;
+  text-align: center;
+}
+
+.line-chart-widget__chart-container {
+  display: block;
+  overflow: hidden;
+}
+
+.line-chart-widget__svg {
+  display: block;
+  margin: 0 auto;
+}
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: lighten($line-chart-widget__main-color, 75%);
+  stroke-width: 2px;
+  shape-rendering: crispEdges;
+}
+
+.line {
+  fill: none;
+  stroke: lighten($line-chart-widget__main-color, 75%);
+  stroke-width: 1.5px;
+  shape-rendering: crispEdges;
+}
