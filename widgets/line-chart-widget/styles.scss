@@ -2,7 +2,6 @@ $line-chart-widget__main-color: #C94C00;
 
 &.line-chart-widget {
   background-color: $line-chart-widget__main-color;
-  padding: 1rem;
 }
 
 .line-chart-widget__title {
@@ -26,13 +25,18 @@ $line-chart-widget__main-color: #C94C00;
 .axis line {
   fill: none;
   stroke: lighten($line-chart-widget__main-color, 75%);
-  stroke-width: 2px;
+  stroke-width: 1px;
   shape-rendering: crispEdges;
+  stroke-dasharray: 2, 2;
 }
 
 .line {
   fill: none;
   stroke: lighten($line-chart-widget__main-color, 75%);
   stroke-width: 1.5px;
-  shape-rendering: crispEdges;
+}
+
+.axis-text {
+  fill: lighten($line-chart-widget__main-color, 75%);
+  font-size: 14px;
 }

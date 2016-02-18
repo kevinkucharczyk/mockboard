@@ -19,33 +19,40 @@ const data = _array.zipWith(dataset, dates, function(value, date) {
 export default BaseWidget.extend({
   classNames: ['line-chart-widget'],
   width: 300,
-  height: 100,
-  transform: Ember.computed('width', 'height', function() {
-    return 'translate(' + this.get('width')/2 + ',' + this.get('width')/2 + ')';
+  height: 200,
+  margin: {
+    top: 10,
+    right: 10,
+    bottom: 30,
+    left: 40
+  },
+  transform: Ember.computed('margin', function() {
+    const margin = this.get('margin');
+    return 'translate(' + margin.left + ',' + margin.top + ')';
   }),
 
-  svg: Ember.computed(function() {
-    return d3.select(this.$('.line-chart-widget__svg')[0]);
+  viewport: Ember.computed(function() {
+    return d3.select(this.$('.line-chart-widget__viewport')[0]);
   }),
 
   xScale: Ember.computed(function() {
-    const width = this.get('width');
-    return d3.time.scale().domain([new Date(dates[0]), new Date(dates[dates.length - 1])]).range([0, width]);
+    const margin = this.get('margin');
+    const width = this.get('width') - margin.left - margin.right;
+    return d3.time.scale().range([0, width]);
   }),
 
   yScale: Ember.computed(function() {
-    const height = this.get('height');
-    return d3.scale.linear().domain([d3.min(dataset), d3.max(dataset)]).range([height, 0]);
+    const margin = this.get('margin');
+    const height = this.get('height') - margin.top - margin.bottom;
+    return d3.scale.linear().range([height, 0]);
   }),
 
   xAxis: Ember.computed(function() {
-    const xScale = this.get('xScale');
-    return d3.svg.axis().scale(xScale).orient('bottom');
+    return d3.svg.axis().orient('bottom').tickFormat(d3.time.format("%Y-%m-%d")).ticks(5);
   }),
 
   yAxis: Ember.computed(function() {
-    const yScale = this.get('yScale');
-    return d3.svg.axis().scale(yScale).orient('left');
+    return d3.svg.axis().orient('left');
   }),
 
 	line: Ember.computed(function() {
@@ -62,7 +69,7 @@ export default BaseWidget.extend({
 
   _updateDimensions() {
     const width = this.$().width();
-    const height = this.$().height();
+    const height = this.$().height() - this.$('.line-chart-widget__title').outerHeight(true);
     this.set('width', width);
     this.set('height', height);
   },
@@ -76,24 +83,34 @@ export default BaseWidget.extend({
   },
 
   _drawChart() {
-    const svg = this.get('svg');
+    const margin = this.get('margin');
+    const viewport = this.get('viewport');
+    const xScale = this.get('xScale');
+    const yScale = this.get('yScale');
 
     const xAxis = this.get('xAxis');
     const yAxis = this.get('yAxis');
     const line = this.get('line');
 
-    svg.append('g')
-      .attr('class', 'x axis')
-      .attr('transform', 'translate(0,' + this.get('height') + ')')
-      .call(xAxis);
+    xScale.domain(d3.extent(dates, function(d) { return new Date(d); })).nice();
+    yScale.domain(d3.extent(dataset)).nice();
 
-    svg.append('g')
-      .attr('class', 'y axis')
-      .call(yAxis);
+    xAxis.scale(xScale);
+    yAxis.scale(yScale);
 
-    svg.append('path')
+    viewport.select('g.x')
+      .attr('transform', 'translate(0,' + (this.get('height') - margin.top - margin.bottom) + ')')
+      .call(xAxis)
+      .selectAll('text')
+      .attr('class', 'axis-text');
+
+    viewport.select('g.y')
+      .call(yAxis)
+      .selectAll('text')
+      .attr('class', 'axis-text');
+
+    viewport.select('path.line')
       .datum(data)
-      .attr('class', 'line')
       .attr('d', line);
   },
 

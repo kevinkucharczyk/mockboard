@@ -5,6 +5,11 @@
 <div class="line-chart-widget__chart-container">
   <div class="line-chart-widget__chart">
     <svg class="line-chart-widget__svg" width="{{width}}" height="{{height}}">
+      <g class="line-chart-widget__viewport" transform="{{transform}}">
+        <g class="x axis"></g>
+        <g class="y axis"></g>
+        <path class="line"></path>
+      </g>
     </svg>
   </div>
 </div>
