@@ -3,19 +3,6 @@ import BaseWidget from 'mockboard-base-widget';
 import d3 from 'd3';
 import _array from 'lodash/array';
 
-const pi = Math.PI;
-
-const dataset = [93.24, 95.35, 98.84, 99.92, 99.80, 99.47, 100.39, 100.40, 100.81, 103.92, 105.06, 106.88, 107.34, 108.74, 109.36, 107.52, 107.34, 109.44, 110.02, 111.98, 113.54, 112.89, 110.69, 113.62, 114.35, 118.77, 121.19, 118.40, 121.33, 122.67, 123.64, 124.07, 124.49, 120.19];
-
-const dates = ['2016-01-01', '2016-01-02', '2016-01-03', '2016-01-04', '2016-01-05', '2016-01-06', '2016-01-07', '2016-01-08', '2016-01-09', '2016-01-10', '2016-01-11', '2016-01-12', '2016-01-13', '2016-01-14', '2016-01-15', '2016-01-16', '2016-01-17', '2016-01-18', '2016-01-19', '2016-01-20', '2016-01-21', '2016-01-22', '2016-01-23', '2016-01-24', '2016-01-25', '2016-01-26', '2016-01-27', '2016-01-28', '2016-01-29', '2016-01-30', '2016-01-31', '2016-02-01', '2016-02-02', '2016-02-03'];
-
-const data = _array.zipWith(dataset, dates, function(value, date) {
-  return {
-    value: value,
-    date: date
-  };
-});
-
 export default BaseWidget.extend({
   classNames: ['line-chart-widget'],
   width: 300,
@@ -26,6 +13,7 @@ export default BaseWidget.extend({
     bottom: 30,
     left: 40
   },
+  data: [],
   transform: Ember.computed('margin', function() {
     const margin = this.get('margin');
     return 'translate(' + margin.left + ',' + margin.top + ')';
@@ -48,7 +36,7 @@ export default BaseWidget.extend({
   }),
 
   xAxis: Ember.computed(function() {
-    return d3.svg.axis().orient('bottom').tickFormat(d3.time.format("%Y-%m-%d")).ticks(5);
+    return d3.svg.axis().orient('bottom').tickFormat(d3.time.format("%H:%M:%S")).ticks(5).outerTickSize(0);
   }),
 
   yAxis: Ember.computed(function() {
@@ -92,8 +80,10 @@ export default BaseWidget.extend({
     const yAxis = this.get('yAxis');
     const line = this.get('line');
 
-    xScale.domain(d3.extent(dates, function(d) { return new Date(d); })).nice();
-    yScale.domain(d3.extent(dataset)).nice();
+    const data = this.get('data');
+
+    xScale.domain(d3.extent(data, function(d) { return new Date(d.date); }));
+    yScale.domain(d3.extent(data, function(d) { return d.value; })).nice();
 
     xAxis.scale(xScale);
     yAxis.scale(yScale);
@@ -134,7 +124,7 @@ export default BaseWidget.extend({
 
   init: function() {
     this._super();
-    this.addObserver('data', this.update);
+    this.addObserver('data', this.draw);
   },
 
   didInsertElement() {
