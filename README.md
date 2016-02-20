@@ -10,8 +10,8 @@ You will need the following things properly installed on your computer:
 
 * [Git](http://git-scm.com/)
 * [Node.js](http://nodejs.org/) (with NPM)
-* [Gulp](http://gulpjs.com/) (npm install -g gulp-cli)
-* [PhantomJS](http://phantomjs.org/) (npm install -g phantomjs)
+* [Gulp](http://gulpjs.com/) (`npm install -g gulp-cli`)
+* [PhantomJS](http://phantomjs.org/) (`npm install -g phantomjs`)
 
 ## Installation
 
