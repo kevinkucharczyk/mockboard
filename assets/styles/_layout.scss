@@ -1,0 +1,34 @@
+@import url(//fonts.googleapis.com/css?family=Lato:400,300,700);
+
+body {
+  padding: 0;
+  margin: 0;
+  font-family: "Lato", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-weight: 300;
+  line-height: 1.5;
+  color: #fefefe;
+  background: #343840;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 300;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.gridster ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.gs-w {
+  display: table;
+}
+
+.mockboard-widget {
+  display: table-cell;
+  vertical-align: middle;
+}

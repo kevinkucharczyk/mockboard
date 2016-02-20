@@ -5,7 +5,7 @@ $line-chart-widget__main-color: #C94C00;
 }
 
 .line-chart-widget__title {
-  margin-bottom: $global-padding;
+  margin-bottom: 2rem;
   color: lighten($line-chart-widget__main-color, 75%);
   font-size: 1.5rem;
   text-align: center;

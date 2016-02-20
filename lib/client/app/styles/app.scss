@@ -1,11 +1,5 @@
 @charset 'utf-8';
 
-@import 'settings';
-@import 'foundation';
+@import '../../assets/styles/app.scss';
 
-@include foundation-global-styles;
-@include foundation-grid;
-@include foundation-typography;
-
-@import 'layout';
 @import 'pod-styles';
