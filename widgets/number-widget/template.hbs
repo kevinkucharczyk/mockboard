@@ -5,3 +5,9 @@
 <div class="number-widget__value">
   {{value}}
 </div>
+
+<div class="number-widget__updated-at">
+  {{#if updatedAt}}
+    Updated at {{moment-format updatedAt "YYYY-MM-DD HH:mm:ss"}}
+  {{/if}}
+</div>

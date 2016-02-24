@@ -10,3 +10,9 @@
     </svg>
   </div>
 </div>
+
+<div class="gauge-widget__updated-at">
+  {{#if updatedAt}}
+    Updated at {{moment-format updatedAt "YYYY-MM-DD HH:mm:ss"}}
+  {{/if}}
+</div>

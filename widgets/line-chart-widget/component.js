@@ -10,7 +10,7 @@ export default BaseWidget.extend({
   margin: {
     top: 10,
     right: 10,
-    bottom: 30,
+    bottom: 40,
     left: 40
   },
   data: [],

@@ -11,6 +11,14 @@ $line-chart-widget__main-color: #C94C00;
   text-align: center;
 }
 
+.line-chart-widget__updated-at {
+  position: absolute;
+  right: 4px;
+  bottom: 0;
+  color: lighten($line-chart-widget__main-color, 40%);
+  font-size: 0.9rem;
+}
+
 .line-chart-widget__chart-container {
   display: block;
   overflow: hidden;

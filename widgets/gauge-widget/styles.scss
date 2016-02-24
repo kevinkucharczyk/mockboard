@@ -11,6 +11,14 @@ $gauge-widget__main-color: #542437;
   text-align: center;
 }
 
+.gauge-widget__updated-at {
+  position: absolute;
+  right: 4px;
+  bottom: 0;
+  color: lighten($gauge-widget__main-color, 40%);
+  font-size: 0.9rem;
+}
+
 .gauge-widget__chart-container {
   display: block;
   overflow: hidden;
