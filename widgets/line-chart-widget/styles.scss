@@ -1,30 +1,30 @@
-$line-chart-widget__main-color: #C94C00;
+$widget__main-color: #C94C00;
 
-&.line-chart-widget {
-  background-color: $line-chart-widget__main-color;
+& {
+  background-color: $widget__main-color;
 }
 
-.line-chart-widget__title {
+.widget__title {
   margin-bottom: 2rem;
-  color: lighten($line-chart-widget__main-color, 75%);
+  color: lighten($widget__main-color, 75%);
   font-size: 1.5rem;
   text-align: center;
 }
 
-.line-chart-widget__updated-at {
+.widget__updated-at {
   position: absolute;
   right: 4px;
   bottom: 0;
-  color: lighten($line-chart-widget__main-color, 40%);
+  color: lighten($widget__main-color, 40%);
   font-size: 0.9rem;
 }
 
-.line-chart-widget__chart-container {
+.widget__chart-container {
   display: block;
   overflow: hidden;
 }
 
-.line-chart-widget__svg {
+.widget__svg {
   display: block;
   margin: 0 auto;
 }
@@ -32,7 +32,7 @@ $line-chart-widget__main-color: #C94C00;
 .axis path,
 .axis line {
   fill: none;
-  stroke: lighten($line-chart-widget__main-color, 75%);
+  stroke: lighten($widget__main-color, 75%);
   stroke-width: 1px;
   shape-rendering: crispEdges;
   stroke-dasharray: 2, 2;
@@ -40,11 +40,11 @@ $line-chart-widget__main-color: #C94C00;
 
 .line {
   fill: none;
-  stroke: lighten($line-chart-widget__main-color, 75%);
+  stroke: lighten($widget__main-color, 75%);
   stroke-width: 1.5px;
 }
 
 .axis-text {
-  fill: lighten($line-chart-widget__main-color, 75%);
+  fill: lighten($widget__main-color, 75%);
   font-size: 14px;
 }

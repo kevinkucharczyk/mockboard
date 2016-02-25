@@ -4,7 +4,6 @@ import d3 from 'd3';
 import _array from 'lodash/array';
 
 export default BaseWidget.extend({
-  classNames: ['line-chart-widget'],
   width: 300,
   height: 200,
   margin: {
@@ -20,7 +19,7 @@ export default BaseWidget.extend({
   }),
 
   viewport: Ember.computed(function() {
-    return d3.select(this.$('.line-chart-widget__viewport')[0]);
+    return d3.select(this.$('.widget__viewport')[0]);
   }),
 
   xScale: Ember.computed(function() {
@@ -57,7 +56,7 @@ export default BaseWidget.extend({
 
   _updateDimensions() {
     const width = this.$().width();
-    const height = this.$().height() - this.$('.line-chart-widget__title').outerHeight(true);
+    const height = this.$().height() - this.$('.widget__title').outerHeight(true);
     this.set('width', width);
     this.set('height', height);
   },

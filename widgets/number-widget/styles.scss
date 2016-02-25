@@ -1,26 +1,26 @@
-$number-widget__main-color: #348899;
+$widget__main-color: #348899;
 
-&.number-widget {
+& {
   padding: 2rem;
-  background-color: $number-widget__main-color;
+  background-color: $widget__main-color;
 }
 
-.number-widget__title {
-  color: lighten($number-widget__main-color, 50%);
+.widget__title {
+  color: lighten($widget__main-color, 50%);
   font-size: 1.5rem;
   text-align: center;
 }
 
-.number-widget__value {
-  color: lighten($number-widget__main-color, 75%);
+.widget__value {
+  color: lighten($widget__main-color, 75%);
   font-size: 2rem;
   text-align: center;
 }
 
-.number-widget__updated-at {
+.widget__updated-at {
   position: absolute;
   right: 4px;
   bottom: 0;
-  color: lighten($number-widget__main-color, 40%);
+  color: lighten($widget__main-color, 40%);
   font-size: 0.9rem;
 }

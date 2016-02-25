@@ -1,44 +1,44 @@
-$gauge-widget__main-color: #542437;
+$widget__main-color: #542437;
 
-&.gauge-widget {
-  background-color: $gauge-widget__main-color;
+& {
+  background-color: $widget__main-color;
 }
 
-.gauge-widget__title {
+.widget__title {
   margin-bottom: 2rem;
-  color: lighten($gauge-widget__main-color, 75%);
+  color: lighten($widget__main-color, 75%);
   font-size: 1.5rem;
   text-align: center;
 }
 
-.gauge-widget__updated-at {
+.widget__updated-at {
   position: absolute;
   right: 4px;
   bottom: 0;
-  color: lighten($gauge-widget__main-color, 40%);
+  color: lighten($widget__main-color, 40%);
   font-size: 0.9rem;
 }
 
-.gauge-widget__chart-container {
+.widget__chart-container {
   display: block;
   overflow: hidden;
 }
 
-.gauge-widget__svg {
+.widget__svg {
   display: block;
   margin: 0 auto;
 }
 
-.gauge-widget__value-path {
-  fill: lighten($gauge-widget__main-color, 75%);
+.widget__value-path {
+  fill: lighten($widget__main-color, 75%);
 }
 
-.gauge-widget__remainder-path {
-  fill: lighten($gauge-widget__main-color, 10%);
+.widget__remainder-path {
+  fill: lighten($widget__main-color, 10%);
 }
 
-.gauge-widget__text {
-  fill: lighten($gauge-widget__main-color, 75%);
+.widget__text {
+  fill: lighten($widget__main-color, 75%);
   font-weight: 600;
   text-anchor: middle;
 }

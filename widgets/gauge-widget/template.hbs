@@ -1,17 +1,17 @@
-<div class="gauge-widget__title">
+<div class="widget__title">
   {{title}}
 </div>
 
-<div class="gauge-widget__chart-container">
-  <div class="gauge-widget__chart">
-    <svg class="gauge-widget__svg" width="{{width}}" height="{{height}}">
-      <g class="gauge-widget__viewport" transform="{{transform}}">
+<div class="widget__chart-container">
+  <div class="widget__chart">
+    <svg class="widget__svg" width="{{width}}" height="{{height}}">
+      <g class="widget__viewport" transform="{{transform}}">
       </g>
     </svg>
   </div>
 </div>
 
-<div class="gauge-widget__updated-at">
+<div class="widget__updated-at">
   {{#if updatedAt}}
     Updated at {{moment-format updatedAt "YYYY-MM-DD HH:mm:ss"}}
   {{/if}}

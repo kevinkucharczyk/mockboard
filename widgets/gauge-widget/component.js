@@ -5,8 +5,7 @@ import d3 from 'd3';
 const pi = Math.PI;
 
 export default BaseWidget.extend({
-  classNames: ['gauge-widget'],
-  pathClasses: ['gauge-widget__value-path', 'gauge-widget__remainder-path'],
+  pathClasses: ['widget__value-path', 'widget__remainder-path'],
   currentData: [],
   offset: 120,
   width: 300,
@@ -20,7 +19,7 @@ export default BaseWidget.extend({
   }),
 
   viewport: Ember.computed(function() {
-    return d3.select(this.$('.gauge-widget__viewport')[0]);
+    return d3.select(this.$('.widget__viewport')[0]);
   }),
 
   data: Ember.computed('value', 'max', function() {
@@ -121,7 +120,7 @@ export default BaseWidget.extend({
 
     textEnter
       .append('text')
-      .attr('class', 'gauge-widget__text');
+      .attr('class', 'widget__text');
 
     groups.exit().remove();
     text.exit().remove();
