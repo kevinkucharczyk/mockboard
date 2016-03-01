@@ -1,0 +1,17 @@
+<div class="custom-dashboard">
+  <div class="gridster">
+    <ul>
+      <li data-row="1" data-col="1" data-sizex="1" data-sizey="1">
+        {{number-widget title="Test Number" value=5 channel="number"}}
+      </li>
+
+      <li data-row="1" data-col="2" data-sizex="1" data-sizey="1">
+        {{gauge-widget title="Test Gauge" value=40 max=100 channel="gauge"}}
+      </li>
+
+      <li data-row="2" data-col="1" data-sizex="2" data-sizey="1">
+        {{line-chart-widget title="Test LineChart" channel="linechart"}}
+      </li>
+    </ul>
+  </div>
+</div>

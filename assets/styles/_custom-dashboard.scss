@@ -1,0 +1,23 @@
+.custom-dashboard {
+  background: url("images/custom-bg.jpg") no-repeat center center fixed;
+  background-size: cover;
+  margin: 0;
+	padding: 0;
+	border: 0;
+  height: 100%;
+  width: 100%;
+
+
+  .mockboard-widget {
+    background-color: transparentize(#000, 0.25);
+
+    .widget__title,
+    .widget__updated-at {
+      color: #fff;
+    }
+
+    .widget__remainder-path {
+      fill: transparentize(#fff, 0.75);
+    }
+  }
+}
