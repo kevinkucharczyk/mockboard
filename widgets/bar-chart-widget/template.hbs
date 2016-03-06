@@ -1,0 +1,20 @@
+<div class="widget__title">
+  {{title}}
+</div>
+
+<div class="widget__chart-container">
+  <div class="widget__chart">
+    <svg class="widget__svg" width="{{width}}" height="{{height}}">
+      <g class="widget__viewport" transform="{{transform}}">
+        <g class="x axis"></g>
+        <g class="y axis"></g>
+      </g>
+    </svg>
+  </div>
+</div>
+
+<div class="widget__updated-at">
+  {{#if updatedAt}}
+    Updated at {{moment-format updatedAt "YYYY-MM-DD HH:mm:ss"}}
+  {{/if}}
+</div>

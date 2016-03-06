@@ -1,0 +1,48 @@
+$widget__main-color: #0B0B45;
+
+& {
+  background-color: $widget__main-color;
+}
+
+.widget__title {
+  margin-bottom: 2rem;
+  color: lighten($widget__main-color, 75%);
+  font-size: 1.5rem;
+  text-align: center;
+}
+
+.widget__updated-at {
+  position: absolute;
+  right: 4px;
+  bottom: 0;
+  color: lighten($widget__main-color, 40%);
+  font-size: 0.9rem;
+}
+
+.widget__chart-container {
+  display: block;
+  overflow: hidden;
+}
+
+.widget__svg {
+  display: block;
+  margin: 0 auto;
+}
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: lighten($widget__main-color, 75%);
+  stroke-width: 1px;
+  shape-rendering: crispEdges;
+  stroke-dasharray: 2, 2;
+}
+
+.bar {
+  fill: lighten($widget__main-color, 75%);
+}
+
+.axis-text {
+  fill: lighten($widget__main-color, 75%);
+  font-size: 14px;
+}
