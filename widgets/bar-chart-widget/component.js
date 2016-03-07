@@ -22,16 +22,26 @@ export default BaseWidget.extend({
     return d3.select(this.$('.widget__viewport')[0]);
   }),
 
-  xScale: Ember.computed(function() {
-    const margin = this.get('margin');
-    const width = this.get('width') - margin.left - margin.right;
-    return d3.scale.ordinal().rangeRoundBands([0, width], .1);
+  xDomain: Ember.computed('data', function() {
+    return this.get('data').map(function(d) { return d.label; });
   }),
 
-  yScale: Ember.computed(function() {
+  yDomain: Ember.computed('data', function() {
+    return d3.extent(this.get('data'), function(d) { return d.value; });
+  }),
+
+  xScale: Ember.computed('margin', 'height', 'xDomain', function() {
+    const margin = this.get('margin');
+    const width = this.get('width') - margin.left - margin.right;
+    return d3.scale.ordinal()
+      .domain(this.get('xDomain')).rangeRoundBands([0, width], .1);
+  }),
+
+  yScale: Ember.computed('margin', 'height', 'yDomain', function() {
     const margin = this.get('margin');
     const height = this.get('height') - margin.top - margin.bottom;
-    return d3.scale.linear().range([height, 0]);
+    return d3.scale.linear()
+      .domain(this.get('yDomain')).range([height, 0]);
   }),
 
   xAxis: Ember.computed(function() {
@@ -42,10 +52,9 @@ export default BaseWidget.extend({
     return d3.svg.axis().orient('left');
   }),
 
-  bars: Ember.computed('data', function() {
-    const data = this.get('data');
-    return this.get('viewport').selectAll('.bar').data(data);
-  }),
+  bars: Ember.computed(function() {
+    return this.get('viewport').selectAll('.bar').data(this.get('data'), function(d) { return d.value; });
+  }).volatile(),
 
   updateDimensions() {
     Ember.run.scheduleOnce('afterRender', this, '_updateDimensions');
@@ -63,7 +72,7 @@ export default BaseWidget.extend({
   },
 
   _draw() {
-      this._drawChart();
+    this._drawChart();
   },
 
   _drawChart() {
@@ -77,9 +86,6 @@ export default BaseWidget.extend({
     const yAxis = this.get('yAxis');
 
     const data = this.get('data');
-
-    xScale.domain(data.map(function(d) { return d.label; }));
-    yScale.domain(d3.extent(data, function(d) { return d.value; }));
 
     xAxis.scale(xScale);
     yAxis.scale(yScale);
@@ -97,13 +103,15 @@ export default BaseWidget.extend({
 
     const bars = this.get('bars');
 
-    bars
-      .enter().append('rect')
+    bars.enter()
+      .append('rect')
       .attr('class', 'bar')
       .attr('x', function(d) { return xScale(d.label); })
       .attr('width', xScale.rangeBand())
       .attr('y', function(d) { return yScale(d.value); })
       .attr('height', function(d) { return innerHeight - yScale(d.value); });
+
+    return bars.exit().remove();
   },
 
   _onResizeEnd() {
@@ -126,7 +134,7 @@ export default BaseWidget.extend({
 
   init: function() {
     this._super();
-    this.addObserver('data', this.update);
+    this.addObserver('data', this.draw);
   },
 
   didInsertElement() {
