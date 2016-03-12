@@ -1,0 +1,196 @@
+@import url(//fonts.googleapis.com/css?family=Lato:400,300,700);
+html,
+body,
+.mockboard-body,
+.index-dashboard {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  height: 100%;
+  width: 100%; }
+
+body {
+  font-family: "Lato", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-weight: 300;
+  line-height: 1.5;
+  color: #fefefe; }
+
+.index-dashboard {
+  background: #343840;
+  overflow: auto; }
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 300; }
+
+.text-center {
+  text-align: center; }
+
+.gridster {
+  margin: 0 auto; }
+  .gridster ul {
+    margin: 0;
+    padding: 0;
+    list-style: none; }
+
+.gs-w {
+  display: table; }
+
+.mockboard-widget {
+  display: table-cell;
+  vertical-align: middle; }
+
+.custom-dashboard {
+  background: url("images/custom-bg.jpg") no-repeat center center fixed;
+  background-size: cover;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  height: 100%;
+  width: 100%; }
+  .custom-dashboard .mockboard-widget {
+    background-color: rgba(0, 0, 0, 0.75); }
+    .custom-dashboard .mockboard-widget .widget__title,
+    .custom-dashboard .mockboard-widget .widget__updated-at {
+      color: #fff; }
+    .custom-dashboard .mockboard-widget .widget__remainder-path {
+      fill: rgba(255, 255, 255, 0.25); }
+    .custom-dashboard .mockboard-widget .axis-text {
+      fill: #fff; }
+    .custom-dashboard .mockboard-widget .bar {
+      fill: #fff; }
+
+.bar-chart-widget-63ef81da {
+  background-color: #0B0B45; }
+
+.bar-chart-widget-63ef81da .widget__title {
+  margin-bottom: 2rem;
+  color: #d6d6f8;
+  font-size: 1.5rem;
+  text-align: center; }
+
+.bar-chart-widget-63ef81da .widget__updated-at {
+  position: absolute;
+  right: 4px;
+  bottom: 0;
+  color: #3c3ce0;
+  font-size: 0.9rem; }
+
+.bar-chart-widget-63ef81da .widget__chart-container {
+  display: block;
+  overflow: hidden; }
+
+.bar-chart-widget-63ef81da .widget__svg {
+  display: block;
+  margin: 0 auto; }
+
+.bar-chart-widget-63ef81da .axis path,
+.bar-chart-widget-63ef81da .axis line {
+  fill: none;
+  stroke: #d6d6f8;
+  stroke-width: 1px;
+  shape-rendering: crispEdges;
+  stroke-dasharray: 2, 2; }
+
+.bar-chart-widget-63ef81da .bar {
+  fill: #d6d6f8; }
+
+.bar-chart-widget-63ef81da .axis-text {
+  fill: #d6d6f8;
+  font-size: 14px; }
+
+.gauge-widget-43ad292b {
+  background-color: #542437; }
+
+.gauge-widget-43ad292b .widget__title {
+  margin-bottom: 2rem;
+  color: #fdfafb;
+  font-size: 1.5rem;
+  text-align: center; }
+
+.gauge-widget-43ad292b .widget__updated-at {
+  position: absolute;
+  right: 4px;
+  bottom: 0;
+  color: #c77d9a;
+  font-size: 0.9rem; }
+
+.gauge-widget-43ad292b .widget__chart-container {
+  display: block;
+  overflow: hidden; }
+
+.gauge-widget-43ad292b .widget__svg {
+  display: block;
+  margin: 0 auto; }
+
+.gauge-widget-43ad292b .widget__value-path {
+  fill: #fdfafb; }
+
+.gauge-widget-43ad292b .widget__remainder-path {
+  fill: #78334e; }
+
+.gauge-widget-43ad292b .widget__text {
+  fill: #fdfafb;
+  font-weight: 600;
+  text-anchor: middle; }
+
+.line-chart-widget-5b5397b5 {
+  background-color: #C94C00; }
+
+.line-chart-widget-5b5397b5 .widget__title {
+  margin-bottom: 2rem;
+  color: white;
+  font-size: 1.5rem;
+  text-align: center; }
+
+.line-chart-widget-5b5397b5 .widget__updated-at {
+  position: absolute;
+  right: 4px;
+  bottom: 0;
+  color: #ffbe96;
+  font-size: 0.9rem; }
+
+.line-chart-widget-5b5397b5 .widget__chart-container {
+  display: block;
+  overflow: hidden; }
+
+.line-chart-widget-5b5397b5 .widget__svg {
+  display: block;
+  margin: 0 auto; }
+
+.line-chart-widget-5b5397b5 .axis path,
+.line-chart-widget-5b5397b5 .axis line {
+  fill: none;
+  stroke: white;
+  stroke-width: 1px;
+  shape-rendering: crispEdges;
+  stroke-dasharray: 2, 2; }
+
+.line-chart-widget-5b5397b5 .line {
+  fill: none;
+  stroke: white;
+  stroke-width: 1.5px; }
+
+.line-chart-widget-5b5397b5 .axis-text {
+  fill: white;
+  font-size: 14px; }
+
+.number-widget-b6c988fa {
+  padding: 2rem;
+  background-color: #348899; }
+
+.number-widget-b6c988fa .widget__title {
+  color: #daeef2;
+  font-size: 1.5rem;
+  text-align: center; }
+
+.number-widget-b6c988fa .widget__value {
+  color: white;
+  font-size: 2rem;
+  text-align: center; }
+
+.number-widget-b6c988fa .widget__updated-at {
+  position: absolute;
+  right: 4px;
+  bottom: 0;
+  color: #b4dde5;
+  font-size: 0.9rem; }
